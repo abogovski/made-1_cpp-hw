@@ -16,7 +16,7 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: do build
-              run: cd hw1; cmake. && make all
+              run: cd hw1; cmake . && make all
 
   test:
         runs-on: ubuntu-latest
