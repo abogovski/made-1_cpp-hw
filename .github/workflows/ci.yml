@@ -12,7 +12,7 @@ jobs:
   build:
         runs-on: ubuntu-latest
         container: leshiy1295/gcc_linters_valgrind_cmake_gtest
-        needs: [check]
+        # needs: [check]
         steps:
             - uses: actions/checkout@v2
             - name: do build
@@ -21,7 +21,7 @@ jobs:
   test:
         runs-on: ubuntu-latest
         container: leshiy1295/gcc_linters_valgrind_cmake_gtest
-        needs: [build]
+        # needs: [build]
         steps:
             - uses: actions/checkout@v2
             - name: prepare
