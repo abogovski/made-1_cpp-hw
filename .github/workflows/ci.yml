@@ -1,0 +1,30 @@
+on: push
+
+jobs:
+    check:
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    steps:
+        - uses: actions/checkout@v2
+        - name: do check
+          run: cw hw1; bash ./linters.sh
+
+    build:
+        runs-on: ubuntu-latest
+        container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+        needs: [check]
+        steps:
+            - uses: actions/checkout@v2
+              run: cd hw1; cmake. && make all
+
+    test:
+        runs-on: ubuntu-latest
+        container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+        needs: [build]
+        steps:
+            - uses: actions/checkout@v2
+            - name: prepare
+              run: apt install -y lcov
+            - name: do build
+              run: cd hw1; cmake . && make all
+            - name: do test
+              run: cd hw1; ./test_coverage.sh
