@@ -1,22 +1,23 @@
 on: push
 
 jobs:
-    check:
+  check:
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     steps:
         - uses: actions/checkout@v2
         - name: do check
           run: cw hw1; bash ./linters.sh
 
-    build:
+  build:
         runs-on: ubuntu-latest
         container: leshiy1295/gcc_linters_valgrind_cmake_gtest
         needs: [check]
         steps:
             - uses: actions/checkout@v2
+            - name: do build
               run: cd hw1; cmake. && make all
 
-    test:
+  test:
         runs-on: ubuntu-latest
         container: leshiy1295/gcc_linters_valgrind_cmake_gtest
         needs: [build]

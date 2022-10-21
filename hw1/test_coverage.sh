@@ -1,4 +1,4 @@
-cmake . && make all
+cmake -DENABLE_COVERAGE=1 . && make all
 
 lcov -z --directory .
 make test

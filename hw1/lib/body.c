@@ -31,7 +31,7 @@ static const struct BodyRepr BODY_REPRS[] = {
 enum Body bodyFromString(const char* string) {
     const struct BodyRepr* bodyRepr = BODY_REPRS;
     while (bodyRepr->string != NULL) {
-        if (!strcmp(bodyRepr->string, string)) {
+        if (!strcmp(bodyRepr++->string, string)) {
             break;
         }
     }
@@ -41,7 +41,7 @@ enum Body bodyFromString(const char* string) {
 const char* bodyToString(enum Body value) {
     const struct BodyRepr* bodyRepr = BODY_REPRS;
     while (bodyRepr->string != NULL) {
-        if (bodyRepr->value == value) {
+        if (bodyRepr++->value == value) {
             break;
         }
     }
