@@ -6,11 +6,13 @@
 int main()
 {
     struct Car target;
+    target.model = NULL;
     if (!readCar(stdin, &target)) {
         return 1;
     }
 
     struct Car found;
+    found.model = NULL;
     if (!readCar(stdin, &found)) {
         free(target.model); target.model = NULL;
         return 1;
@@ -18,6 +20,7 @@ int main()
 
     double foundDist = carDistance(&target, &found);
     struct Car car;
+    car.model = NULL;
 
     while (readCar(stdin, &car)) {
         double newDist = carDistance(&target, &car);

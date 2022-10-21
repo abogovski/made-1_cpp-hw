@@ -1,30 +1,32 @@
 on: push
 
 jobs:
-    check:
+  check:
+    runs-on: ubuntu-latest
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     steps:
         - uses: actions/checkout@v2
         - name: do check
-          run: cw hw1; bash ./linters.sh
+          run: cd hw1; bash ./linters.sh
 
-    build:
+  build:
         runs-on: ubuntu-latest
         container: leshiy1295/gcc_linters_valgrind_cmake_gtest
-        needs: [check]
+        # needs: [check]
         steps:
             - uses: actions/checkout@v2
-              run: cd hw1; cmake. && make all
+            - name: do build
+              run: cd hw1; cmake . && make all
 
-    test:
+  test:
         runs-on: ubuntu-latest
         container: leshiy1295/gcc_linters_valgrind_cmake_gtest
-        needs: [build]
+        # needs: [build]
         steps:
             - uses: actions/checkout@v2
             - name: prepare
               run: apt install -y lcov
             - name: do build
-              run: cd hw1; cmake . && make all
+              run: cd hw1; cmake -DENABLE_COVERAGE=1. && make all
             - name: do test
-              run: cd hw1; ./test_coverage.sh
+              run: cd hw1; ./test_coverage.sh NO_BUILD
