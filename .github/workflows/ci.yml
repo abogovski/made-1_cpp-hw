@@ -27,6 +27,6 @@ jobs:
             - name: prepare
               run: apt install -y lcov
             - name: do build
-              run: cd hw1; cmake . && make all
+              run: cd hw1; cmake -DENABLE_COVERAGE=1. && make all
             - name: do test
-              run: cd hw1; ./test_coverage.sh
+              run: cd hw1; ./test_coverage.sh NO_BUILD
