@@ -8,7 +8,7 @@ mkdir test_coverage
 for test_file in ./tests/*_tests;
 do
     valgrind --error-exitcode=1 $test_file
-    if [[ $? != 0 ]]; then
+    if [[ "$?" != "0" ]]; then
         exit 1
     fi
 done;

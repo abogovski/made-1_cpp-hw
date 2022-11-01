@@ -7,13 +7,6 @@
 
 const Car UNDEFINED_CAR = {0, 0, 0, Undefined, ""};
 
-void swapCars(Car* left, Car* right)
-{
-    Car car = *left;
-    *left = *right;
-    *right = car;
-}
-
 static double scalarDist(double left, double right)
 {
     if (isnan(left) || isnan(right)) {
@@ -27,7 +20,7 @@ static double bodyDist(Body left, Body right)
     if (left == Undefined || right == Undefined) {
         return 0.0;
     }
-    return PENALTY;
+    return PENALTY * (left != right);
 }
 
 static double modelDist(const char* left, const char* right)

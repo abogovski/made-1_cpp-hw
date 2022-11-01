@@ -9,10 +9,9 @@ typedef struct Car {
     double maxSpeed;
     double fuelConsumption;
     Body body;
-    char model[MAX_MODEL_STR_LEN];
+    char model[MAX_MODEL_STR_LEN + 1];
 } Car;
 
 extern const Car UNDEFINED_CAR;
 
-void swapCars(Car* left, Car* right);
 double carDistance(const Car* left, const Car* right);

@@ -1,5 +1,4 @@
 #include "io.h"
-#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
@@ -49,7 +48,9 @@ bool readCar(FILE* file, Car* car) {
     }
 
     car->body = readBody(file);
-    readModel(file, car->model);
+    if (car->body == Undefined || !readModel(file, car->model)) {
+        return false;
+    }
 
     return true;
 }
