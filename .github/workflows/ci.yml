@@ -2,7 +2,7 @@ on: push
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     steps:
       - uses: actions/checkout@v2
@@ -10,7 +10,7 @@ jobs:
         run: cd hw1; bash ./linters.sh
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     steps:
       - uses: actions/checkout@v2
@@ -18,7 +18,7 @@ jobs:
         run: cd hw1; cmake . && make all
 
   test_coverage:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     steps:
       - uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
         run: cd hw1; ./test_coverage.sh NO_BUILD
 
   test_valgrind:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     steps:
       - uses: actions/checkout@v2
@@ -38,7 +38,7 @@ jobs:
         run: cd hw1; ./test_valgrind.sh NO_BUILD
 
   test_sanitizers:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
     steps:
       - uses: actions/checkout@v2
