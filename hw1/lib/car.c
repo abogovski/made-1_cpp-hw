@@ -1,12 +1,15 @@
 #include "car.h"
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define PENALTY 1
 
-void swapCars(struct Car* left, struct Car* right)
+const Car UNDEFINED_CAR = {0, 0, 0, Undefined, ""};
+
+void swapCars(Car* left, Car* right)
 {
-    struct Car car = *left;
+    Car car = *left;
     *left = *right;
     *right = car;
 }
@@ -19,7 +22,7 @@ static double scalarDist(double left, double right)
     return fabs(left - right);
 }
 
-static double bodyDist(enum Body left, enum Body right)
+static double bodyDist(Body left, Body right)
 {
     if (left == Undefined || right == Undefined) {
         return 0.0;
@@ -32,7 +35,7 @@ static double modelDist(const char* left, const char* right)
     return PENALTY * !!strcmp(left, right);
 }
 
-double carDistance(const struct Car* left, const struct Car* right)
+double carDistance(const Car* left, const Car* right)
 {
     /* TODO:
          tweak penalties,

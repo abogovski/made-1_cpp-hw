@@ -4,13 +4,15 @@
 
 #define MAX_MODEL_STR_LEN 15
 
-struct Car {
+typedef struct Car {
     double enginePower;
     double maxSpeed;
     double fuelConsumption;
-    enum Body body;
-    char* model;
-};
+    Body body;
+    char model[MAX_MODEL_STR_LEN];
+} Car;
 
-void swapCars(struct Car* left, struct Car* right);
-double carDistance(const struct Car* left, const struct Car* right);
+extern const Car UNDEFINED_CAR;
+
+void swapCars(Car* left, Car* right);
+double carDistance(const Car* left, const Car* right);

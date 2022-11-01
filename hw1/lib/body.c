@@ -1,12 +1,12 @@
 #include "body.h"
 #include <string.h>
 
-struct BodyRepr {
+typedef struct BodyRepr {
     enum Body value;
     const char* string;
-};
+} BodyRepr;
 
-static const struct BodyRepr BODY_REPRS[] = {
+static const BodyRepr BODY_REPRS[] = {
     {Buggy,         "buggy"},
     {Convertible,   "convertible"},
     {Coupe,         "coupe"},
@@ -28,22 +28,20 @@ static const struct BodyRepr BODY_REPRS[] = {
     {Undefined,     NULL}
 };
 
-enum Body bodyFromString(const char* string) {
-    const struct BodyRepr* bodyRepr = BODY_REPRS;
-    while (bodyRepr->string != NULL) {
+Body bodyFromString(const char* string) {
+    for (const BodyRepr* bodyRepr = BODY_REPRS ; bodyRepr->string != NULL; ++bodyRepr) {
         if (!strcmp(bodyRepr->string, string)) {
-            break;
+            return bodyRepr->value;
         }
     }
-    return bodyRepr->value;;
+    return Undefined;
 }
 
-const char* bodyToString(enum Body value) {
-    const struct BodyRepr* bodyRepr = BODY_REPRS;
-    while (bodyRepr->string != NULL) {
+const char* bodyToString(Body value) {
+    for (const BodyRepr* bodyRepr = BODY_REPRS; bodyRepr->string != NULL; ++bodyRepr) {
         if (bodyRepr->value == value) {
-            break;
+            return bodyRepr->string;
         }
     }
-    return bodyRepr->string;
+    return NULL;
 }

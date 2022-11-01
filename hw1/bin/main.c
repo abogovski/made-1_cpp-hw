@@ -5,33 +5,28 @@
 
 int main()
 {
-    struct Car target;
-    if (!readCar(stdin, &target)) {
+    Car targetCar = UNDEFINED_CAR;
+    if (!readCar(stdin, &targetCar)) {
         return 1;
     }
 
-    struct Car found;
-    if (!readCar(stdin, &found)) {
-        free(target.model); target.model = NULL;
+    Car foundCar = UNDEFINED_CAR;
+    if (!readCar(stdin, &foundCar)) {
         return 1;
     }
 
-    double foundDist = carDistance(&target, &found);
-    struct Car car;
+    double foundDist = carDistance(&targetCar, &foundCar);
+    Car car = UNDEFINED_CAR;
 
     while (readCar(stdin, &car)) {
-        double newDist = carDistance(&target, &car);
+        double newDist = carDistance(&targetCar, &car);
         if (newDist < foundDist) {
-           swapCars(&found, &car);
+           foundCar = car;
         }
     }
 
     printf("First best match: ");
-    printCar(stdout, &found);
-
-    free(target.model); target.model = NULL;
-    free(found.model); found.model = NULL;
-    free(car.model); car.model = NULL;
+    printCar(stdout, &foundCar);
 
     return 0;
 }

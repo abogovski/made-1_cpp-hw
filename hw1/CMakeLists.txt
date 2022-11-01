@@ -3,6 +3,11 @@ project(hw1)
 
 option(BUILD_BIN "Enable building bin" ON)
 option(BUILD_TESTS "Enable building tests" ON)
+option(ENABLE_SANITIZERS "Enable sanitizers" OFF)
+option(ENABLE_COVERAGE "Enable coverage" OFF)
+
+set(C_CXX_WARNINGS "-Wall -Wpedantic -Wdeprecated -Wextra -Werror")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 ${C_CXX_WARNINGS}")
 
 add_subdirectory(lib)
 

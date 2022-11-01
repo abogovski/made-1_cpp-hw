@@ -14,10 +14,8 @@ extern "C" {
     }
 
 TEST(car, swapCars) {
-    char model1[] = "model1";
-    char model2[] = "model2";
-    Car leftOriginal = {11., 12., 13., Minivan, model1};
-    Car rightOriginal = {21., 22., 23., Hatchback, model2};
+    Car leftOriginal = {11., 12., 13., Minivan, "model1"};
+    Car rightOriginal = {21., 22., 23., Hatchback, "model2"};
 
     Car left = leftOriginal;
     Car right = rightOriginal;
@@ -25,7 +23,4 @@ TEST(car, swapCars) {
     swapCars(&left, &right);
     EXPECT_CARS_EQ(left, rightOriginal);
     EXPECT_CARS_EQ(right, leftOriginal);
-
-    EXPECT_EQ(left.model, rightOriginal.model);
-    EXPECT_EQ(right.model, leftOriginal.model);
 }

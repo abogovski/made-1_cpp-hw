@@ -1,5 +1,6 @@
-SRCS=$(find -wholename "./src/*.c")
-TESTS= $(find -wholename "./src/*.c")
+SRCS=$(find -wholename "./lib/*.c")
+TEST=$(find -wholename "./tests/*.cpp")
 
-cppcheck $SRCS -I ./include && clang-tidy -p ./ $SRCS $TESTS -warnings-as-errors="*"
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 .
+cppcheck $SRCS -I ./lib/include && clang-tidy -p . $SRCS $TESTS -warnings-as-errors="*"
 exit $?

@@ -1,7 +1,7 @@
 #pragma once
 
 /* Source: https://en.wikipedia.org/wiki/Car_body_style#Current_styles */
-enum Body {
+typedef enum Body {
     Undefined,
 
     Buggy,
@@ -21,9 +21,9 @@ enum Body {
     StationWagon,
     TargaTop,
     Ute,
-};
+} Body;
 
 #define MAX_BODY_STR_LEN 13
 
-enum Body bodyFromString(const char* string);
-const char* bodyToString(enum Body value);
+Body bodyFromString(const char* string);
+const char* bodyToString(Body value);

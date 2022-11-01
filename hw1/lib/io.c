@@ -1,70 +1,60 @@
 #include "io.h"
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
-size_t DEFAULT_BUF_SIZE = 8;
-static const int BUF_GROWTH_FACTOR = 2;
+#define STRINGIZE_NX(A) #A
+#define _S(A) STRINGIZE_NX(A)
 
-static bool extendBuf(char** buf, size_t* capacity) {
-     *capacity *= BUF_GROWTH_FACTOR;
-     char* newBuf = realloc(*buf, *capacity);
-     if (newBuf == NULL) {
-         return false;
-     }
-     *buf = newBuf;
-     return true;
+static void consumeTail(FILE* file) {
+    int c = fgetc(file);
+    while (!isspace(c)) {
+        if (c == EOF) {
+            return;
+        }
+        c = fgetc(file);
+    }
+    ungetc(c, file);
 }
 
-static char* readLine(FILE* file) {
-    size_t capacity = DEFAULT_BUF_SIZE;
-    char* buf = (char*)malloc(capacity);
-    if (buf == NULL) {
-        return NULL;
-    }
-
-    size_t offset = 0;
-    while (fgets(buf + offset, capacity - offset, file) != NULL) {
-        offset += strlen(buf + offset);
-        if (buf[offset - 1] == '\n') {
-            break;
-        }
-        if (offset == capacity - 1 && !extendBuf(&buf, &capacity)) {
-            free(buf); buf = NULL;
-            return NULL;
-        }
-    }
-    return buf;
-}
-
-bool readCar(FILE* file, struct Car* car) {
+static Body readBody(FILE* file) {
     char body[MAX_BODY_STR_LEN + 1];
+    int rv = fscanf(file, " %"_S(MAX_BODY_STR_LEN)"s", body);
+    if (rv != 1) {
+        return Undefined;
+    }
+    consumeTail(file);
+    return bodyFromString(body);
+}
 
+bool readModel(FILE* file, char* model) {
+    int rv = fscanf(file, " %"_S(MAX_MODEL_STR_LEN)"s", model);
+    if (rv != 1) {
+        return false;;
+    }
+    consumeTail(file);
+    return true;
+}
+
+bool readCar(FILE* file, Car* car) {
     int rv = fscanf(
         file,
-        "%lf%lf%lf%s",
+        "%lf%lf%lf",
         &car->enginePower,
         &car->maxSpeed,
-        &car->fuelConsumption,
-        body);
+        &car->fuelConsumption);
 
-    if (rv != 4) {
+    if (rv != 3) {
         return false;
     }
 
-    car->body = bodyFromString(body);
-
-    if (car->model != NULL) {
-        free(car->model); car->model = NULL;
-    }
-    car->model = readLine(file);
-    if (car->model == NULL) {
-        return false;
-    }
+    car->body = readBody(file);
+    readModel(file, car->model);
 
     return true;
 }
 
-void printCar(FILE* file, const struct Car* car)
+void printCar(FILE* file, const Car* car)
 {
     fprintf(
         file,
