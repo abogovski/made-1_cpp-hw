@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: do check
-        run: cw hw1; bash ./linters.sh
+        run: cd hw1; bash ./linters.sh
 
   build:
     runs-on: ubuntu-latest
@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: do build
-        run: cd hw1; cmake. && make all
+        run: cd hw1; cmake . && make all
 
   test_coverage:
     runs-on: ubuntu-latest
