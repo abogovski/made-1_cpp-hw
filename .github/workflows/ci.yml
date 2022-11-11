@@ -1,0 +1,48 @@
+on: push
+
+jobs:
+  check:
+    runs-on: ubuntu-18.04
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    steps:
+      - uses: actions/checkout@v2
+      - name: do check
+        run: cd hw1; bash ./linters.sh
+
+  build:
+    runs-on: ubuntu-18.04
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    steps:
+      - uses: actions/checkout@v2
+      - name: do build
+        run: cd hw1; cmake . && make all
+
+  test_coverage:
+    runs-on: ubuntu-18.04
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    steps:
+      - uses: actions/checkout@v2
+      - name: prepare
+        run: apt install -y lcov && cd hw1 && cmake -DBUILD_BIN=0 -DENABLE_COVERAGE=1 -DENABLE_SANITIZERS=0 . && make all
+      - name: do test
+        run: cd hw1; ./test_coverage.sh NO_BUILD
+
+  test_valgrind:
+    runs-on: ubuntu-18.04
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    steps:
+      - uses: actions/checkout@v2
+      - name: prepare
+        run: cd hw1; cmake -DBUILD_BIN=0 -DENABLE_COVERAGE=0 -DENABLE_SANITIZERS=0 . && make all
+      - name: do test
+        run: cd hw1; ./test_valgrind.sh NO_BUILD
+
+  test_sanitizers:
+    runs-on: ubuntu-18.04
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    steps:
+      - uses: actions/checkout@v2
+      - name: prepare
+        run: cd hw1; cmake -DBUILD_BIN=0 -DENABLE_COVERAGE=0 -DENABLE_SANITIZERS=1. && make all
+      - name: do test
+        run: cd hw1; ./test_sanitizers.sh NO_BUILD
