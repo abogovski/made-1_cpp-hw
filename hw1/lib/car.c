@@ -1,4 +1,5 @@
 #include "car.h"
+#include <assert.h>
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
@@ -30,6 +31,7 @@ static double modelDist(const char* left, const char* right)
 
 double carDistance(const Car* left, const Car* right)
 {
+    assert(left != NULL && right != NULL);
     /* TODO:
          tweak penalties,
          use body simularity matrix,

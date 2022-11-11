@@ -18,7 +18,7 @@ static void consumeTail(FILE* file) {
 
 static Body readBody(FILE* file) {
     char body[MAX_BODY_STR_LEN + 1];
-    int rv = fscanf(file, " %"_S(MAX_BODY_STR_LEN)"s", body);
+    int rv = fscanf_s(file, " %s", body, MAX_BODY_STR_LEN);
     if (rv != 1) {
         return Undefined;
     }
@@ -27,7 +27,7 @@ static Body readBody(FILE* file) {
 }
 
 bool readModel(FILE* file, char* model) {
-    int rv = fscanf(file, " %"_S(MAX_MODEL_STR_LEN)"s", model);
+    int rv = fscanf_s(file, " %s", model, MAX_MODEL_STR_LEN);
     if (rv != 1) {
         return false;;
     }
@@ -36,7 +36,7 @@ bool readModel(FILE* file, char* model) {
 }
 
 bool readCar(FILE* file, Car* car) {
-    int rv = fscanf(
+    int rv = fscanf_s(
         file,
         "%lf%lf%lf",
         &car->enginePower,
