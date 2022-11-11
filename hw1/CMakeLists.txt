@@ -8,8 +8,6 @@ option(ENABLE_COVERAGE "Enable coverage" OFF)
 
 set(C_CXX_WARNINGS "-Wall -Wpedantic -Wdeprecated -Wextra -Werror")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${C_CXX_WARNINGS}")
-set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_C_STANDARD 11)
 
 add_subdirectory(lib)
 
