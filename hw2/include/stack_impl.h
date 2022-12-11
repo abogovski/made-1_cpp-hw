@@ -4,7 +4,7 @@
 #include <stdexcept>
 
 template<class MatrixIt>
-size_t getTotalRowsPositiveCount(MatrixIt matricesBegin, MatrixIt matricesEnd) {
+size_t getTotalRowPositiveCount(MatrixIt matricesBegin, MatrixIt matricesEnd) {
     size_t nRows = 0;
     for (MatrixIt it = matricesBegin; it != matricesEnd; ++it) {
         nRows += it->shape().rows;
@@ -16,7 +16,7 @@ size_t getTotalRowsPositiveCount(MatrixIt matricesBegin, MatrixIt matricesEnd) {
 }
 
 template<class MatrixIt>
-size_t getTotalColsPositiveCount(MatrixIt matricesBegin, MatrixIt matricesEnd) {
+size_t getTotalColPositiveCount(MatrixIt matricesBegin, MatrixIt matricesEnd) {
     size_t nCols = 0;
     for (MatrixIt it = matricesBegin; it != matricesEnd; ++it) {
         nCols += it->shape().cols;
@@ -41,7 +41,7 @@ size_t getCommonRowPositiveCount(MatrixIt matricesBegin, MatrixIt matricesEnd) {
     if (!nRows) {
         throw std::runtime_error("can't get common row count for empty list of matrices");
     }
-    if (!*nCols) {
+    if (!*nRows) {
         throw std::runtime_error("common number of rows is not positive");
     }
     return *nRows;

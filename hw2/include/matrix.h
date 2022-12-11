@@ -3,6 +3,7 @@
 #include <memory>
 #include <optional>
 #include <cstddef>
+#include <vector>
 
 using ValueType = double;
 
@@ -11,6 +12,9 @@ struct Shape {
     size_t cols;
 
     bool operator==(const Shape& other) const;
+    bool operator!=(const Shape& other) const;
+
+    Shape T() const;
 };
 
 class Matrix {
@@ -39,7 +43,7 @@ public:
     Matrix operator*(const Matrix& other) const;
     Matrix operator%(const Matrix& other) const;
 
-    Matrix& operator=(const Matrix& other) const;
+    Matrix& operator=(const Matrix& other);
 
 private:
     std::unique_ptr<ValueType> values;
@@ -48,5 +52,5 @@ private:
 };
 
 Matrix Value(ValueType value);
-Matrix Row(size_t nCols, ValueType value);
-Matrix Col(size_t nRows, ValueType value);
+Matrix Row(const std::vector<ValueType>& values);
+Matrix Col(const std::vector<ValueType>& values);
