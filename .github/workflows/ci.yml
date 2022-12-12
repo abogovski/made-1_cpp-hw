@@ -1,0 +1,36 @@
+on: push
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    steps:
+      - uses: actions/checkout@v2
+      - name: check
+        run: bash ./hw4/scripts/check.sh
+
+  build:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    steps:
+      - uses: actions/checkout@v2
+      - name: build
+        run: cd hw4; cmake . && make
+
+  tests:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    steps:
+      - uses: actions/checkout@v2
+      - name: prepare
+        run: apt install -y lcov
+      - name: build and test
+        run: bash ./hw4/scripts/test_coverage.sh
+
+  stress_test:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    steps:
+      - uses: actions/checkout@v2
+      - name: build and test
+        run: bash ./hw4/scripts/stress_test.sh
