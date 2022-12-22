@@ -126,7 +126,7 @@ Matrix add(const Matrix& lhs, const Matrix& rhs) {
     Matrix result(lhs.shape());
     for (size_t i = 0; i < lhs.shape().rows; ++i) {
         for (size_t j = 0; j < lhs.shape().cols; ++j) {
-            result.at(i, j) = lhs.at(i, j) + lhs.at(i, j);
+            result.at(i, j) = lhs.at(i, j) + rhs.at(i, j);
         }
     }
     return result;
@@ -137,7 +137,7 @@ Matrix sub(const Matrix& lhs, const Matrix& rhs) {
     Matrix result(lhs.shape());
     for (size_t i = 0; i < lhs.shape().rows; ++i) {
         for (size_t j = 0; j < lhs.shape().cols; ++j) {
-            result.at(i, j) = lhs.at(i, j) - lhs.at(i, j);
+            result.at(i, j) = lhs.at(i, j) - rhs.at(i, j);
         }
     }
     return result;
@@ -148,7 +148,7 @@ Matrix mul(const Matrix& lhs, const Matrix& rhs) {
     Matrix result(lhs.shape());
     for (size_t i = 0; i < lhs.shape().rows; ++i) {
         for (size_t j = 0; j < lhs.shape().cols; ++j) {
-            result.at(i, j) = lhs.at(i, j) * lhs.at(i, j);
+            result.at(i, j) = lhs.at(i, j) * rhs.at(i, j);
         }
     }
     return result;
@@ -234,7 +234,7 @@ Matrix Row(const std::vector<ValueType>& values) {
     return matrix;
 }
 
-Matrix Col(size_t nRows, const std::vector<ValueType>& values) {
+Matrix Col(const std::vector<ValueType>& values) {
     Matrix matrix({values.size(), 1});
     for (size_t i = 0; i < values.size(); ++i) {
         matrix.at(i, 0) = values[i];

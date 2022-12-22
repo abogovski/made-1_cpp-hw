@@ -27,12 +27,14 @@ size_t getTotalColPositiveCount(MatrixIt matricesBegin, MatrixIt matricesEnd) {
     return nCols;
 }
 
+#include <iostream>
+
 template<class MatrixIt>
 size_t getCommonRowPositiveCount(MatrixIt matricesBegin, MatrixIt matricesEnd) {
     std::optional<size_t> nRows;
     for (MatrixIt it = matricesBegin; it != matricesEnd; ++it) {
         if (!nRows) {
-            *nRows = it->shape().rows;
+            nRows = it->shape().rows;
         }
         if (*nRows != it->shape().rows) {
             throw std::runtime_error("rows count mismatch");
@@ -52,7 +54,7 @@ size_t getCommonColPositiveCount(MatrixIt matricesBegin, MatrixIt matricesEnd) {
     std::optional<size_t> nCols;
     for (MatrixIt it = matricesBegin; it != matricesEnd; ++it) {
         if (!nCols) {
-            *nCols = it->shape().cols;
+            nCols = it->shape().cols;
         }
         if (*nCols != it->shape().cols) {
             throw std::runtime_error("cols count mismatch");
